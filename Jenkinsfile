@@ -7,20 +7,27 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building...Hamid'
+                bat 'mvn clean compile test package'
             }
         }
         
         stage('Test') {
             steps {
-                echo 'Testing...Hamid'
+                bat 'mvn test'
             }
         }
         
-        stage('Deploy') {
+        stage('Package') {
             steps {
-                echo 'Deploying...Hamid'
+                bat 'mvn package'
             }
         }
+        
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t devopsJenkinsImage .'
+            }
+        }
+
     }
 }
